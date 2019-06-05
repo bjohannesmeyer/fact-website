@@ -45,7 +45,9 @@ const nopt = require('nopt'),
     clientState = require('./lib/clientstate'),
     initialiseWine = require('./lib/exec').initialiseWine,
     clientStateGoldenifier = require('./lib/clientstate-normalizer').ClientStateGoldenifier,
-    clientStateNormalizer = require('./lib/clientstate-normalizer').ClientStateNormalizer;
+    clientStateNormalizer = require('./lib/clientstate-normalizer').ClientStateNormalizer,
+    https = require('https');
+    http = require('http');
 
 
 // Parse arguments from command line 'node ./app.js args...'
@@ -287,10 +289,19 @@ aws.initConfig(awsProps)
             } else {
                 _port = defArgs.port;
             }
-            logger.info(`  Listening on http://${defArgs.hostname || 'localhost'}:${_port}/`);
             logger.info(`  Startup duration: ${new Date() - startTime}ms`);
             logger.info("=======================================");
-            server.listen(_port, defArgs.hostname);
+            logger.info(`  Listening on http://${defArgs.hostname || 'localhost'}/`);
+            http.createServer(server).listen(80, defArgs.hostname);
+            logger.info("  Done");
+            logger.info(`  Listening on https://${defArgs.hostname || 'localhost'}/`);
+            https.createServer({
+              key: fs.readFileSync('cert/privkey.pem'),
+              cert: fs.readFileSync('cert/fullchain.pem')
+            }, server)
+            .listen(443, defArgs.hostname);
+            logger.info("  Done");
+            //server.listen(_port, defArgs.hostname);
         }
 
         compilerFinder.find()
