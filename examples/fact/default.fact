@@ -1,0 +1,14 @@
+// Type your code here, or load an example.
+export secret uint32 cmov_example(
+    secret bool boo, 
+    public uint32 a, 
+    public uint32 b) {
+
+    secret mut uint32 output = a;
+    if(boo) {
+        output = b;
+    }
+
+    return output;
+}
+
