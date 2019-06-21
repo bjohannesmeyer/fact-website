@@ -42,6 +42,30 @@ html(lang="en")
           span.community-hide(title="Hide and never show again" aria-label="Close")
             button.close(type="button" aria-hidden="true") &times;
         ul.navbar-nav.navbar-right
+          li.nav-item.dropdown
+            a.nav-link.dropdown-toggle#otherDropdown(href="javascript:;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") #[strong About FaCT]
+            div.dropdown-menu.dropdown-menu-right(aria-labelledby="otherDropdown")
+              a.dropdown-item(href="https://github.com/PLSysSec/FaCT" target="_blank" rel="noopener")
+                span.fab.fa-github
+                | &nbsp; FaCT compiler
+              a.dropdown-item(href="fact_pldi19.pdf" target="_blank" rel="noopener")
+                span.far.fa-file-pdf
+                | &nbsp; Full publication (ACM PLDI 2019)
+              a.dropdown-item(href="fact_secdev17.pdf" target="_blank" rel="noopener")
+                span.far.fa-file-pdf
+                | &nbsp; Preliminary publication (IEEE SecDev 2017)
+              a.dropdown-item(href="https://github.com/PLSysSec/fact-eval" target="_blank" rel="noopener")
+                span.fab.fa-github
+                | &nbsp; Code ported to FaCT
+              a.dropdown-item(href="https://github.com/PLSysSec/CTFFI" target="_blank" rel="noopener")
+                span.fab.fa-github
+                | &nbsp; Using FaCT with Python
+              a.dropdown-item(href="https://github.com/PLSysSec/inline-fact" target="_blank" rel="noopener")
+                span.fab.fa-github
+                | &nbsp; Using FaCT with Haskell
+              a.dropdown-item(href="https://github.com/PLSysSec/factlang.vim" target="_blank" rel="noopener")
+                span.fab.fa-github
+                | &nbsp; Vim syntax highlighting
           li.nav-item
             a.nav-link#share(href="javascript:;") Share
               b.fas.fa-caret-down
@@ -69,12 +93,12 @@ html(lang="en")
               a.dropdown-item#version-tree(href="javascript:;" target="_blank") Version tree
               if sharingEnabled
                 a.dropdown-item#socialshare
-          if policies.cookies.enabled || policies.privacy.enabled
-            li.nav-item.dropdown
-              a.nav-link.dropdown-toggle#policiesDropdown(href="javascript:;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Policies
-              div.dropdown-menu.dropdown-menu-right(aria-labelledby="policiesDropdown")
-                a.dropdown-item#cookies(href="javascript:;") Cookie policy
-                a.dropdown-item#privacy(href="javascript:;") Privacy policy
+          //if policies.cookies.enabled || policies.privacy.enabled
+          li.nav-item.dropdown
+            a.nav-link.dropdown-toggle#policiesDropdown(href="javascript:;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Policies
+            div.dropdown-menu.dropdown-menu-right(aria-labelledby="policiesDropdown")
+              a.dropdown-item#cookies(href="javascript:;") Cookie policy
+              a.dropdown-item#privacy(href="javascript:;") Privacy policy
     #root
 
     include templates.pug
