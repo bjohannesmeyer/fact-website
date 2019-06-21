@@ -1,0 +1,21 @@
+/* This example demonstrates how FaCT requires its source program to be publicly
+ * safe, e.g., from undefined behaviors such as bit-shift overflow or
+ * division-by-zero. This code cannot compile since there is no way to guarantee
+ * that the resulting executable is both publicly safe and constant-time. */
+secret uint32 potential_ub(
+    secret uint32 x,
+    secret uint32 y) {
+
+  /* Since y is secret, the below conditional branch will be transformed away,
+   * and `x << y` will always happen. However, the FaCT compiler does not allow
+   * this since such a transformation would introduce undefined behavior in the
+   * case where `y < 32`. One workaround is to relax the defense model, and leak
+   * the value of `y < 32`, either by adding `assume(y < 32)` or changing the
+   * conditional to `if (declassify(y < 32))`. Another approach, at the cost of
+   * performance, is to instead change the conditional to `for (i from 0 to 31)
+   * { if i == y { return x << i; } }`. */
+  if (y < 32) {
+    return x << y;
+  }
+  return x;
+}

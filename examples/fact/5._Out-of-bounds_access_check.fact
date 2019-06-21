@@ -1,0 +1,26 @@
+/* This example uses a potential out-of-bounds access to demonstrate how FaCT
+ * requires its source program to be publicly safe. */
+void potential_oob(
+    secret mut uint32[] buf,
+    public uint64 i,
+    secret uint64 secret_index) {
+
+  /* We assume we've already checked that the secret index is less than the
+   * length of buf */
+  assume(secret_index < len buf);
+
+  /* Even though we're already assuming `secret_index < len buf` and have a
+   * conditional checking that `i < secret_index`, we still need to assume `i
+   * < len buf`. This is because transforming the conditional into its
+   * constant-time equivalent without the assumption would introduce a
+   * potential out-of-bounds access, since buf[i] would be accessed regardless
+   * of i's value in order to ensure constant-time-ness. The FaCT compiler
+   * checks for this and produces an error when a potential out-of-bounds
+   * access is introduced. Hence, commenting out the below line will produce a
+   * compilation error. */
+  assume(i < len buf);
+
+  if (i < secret_index) {
+    buf[i] = 0;
+  }
+}
