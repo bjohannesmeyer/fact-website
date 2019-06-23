@@ -1,5 +1,5 @@
-/* This example uses a potential out-of-bounds access to demonstrate how FaCT
- * requires its source program to be publicly safe. */
+/* FaCT requires its source program to be publicly safe, e.g., memory-safe using only publicly-visible information. This example requires the assumption `i < len buf` --- even though it already assumes `secret_index < len buf` and checks that `i < secret_index` --- because otherwise the transformation making the conditional branch constant-time would inadvertantly reintroduce the buffer overflow that the branch is already implicitly protecting against. */
+
 void potential_oob(
     secret mut uint32[] buf,
     public uint64 i,
@@ -9,15 +9,9 @@ void potential_oob(
    * length of buf */
   assume(secret_index < len buf);
 
-  /* Even though we're already assuming `secret_index < len buf` and have a
-   * conditional checking that `i < secret_index`, we still need to assume `i
-   * < len buf`. This is because transforming the conditional into its
-   * constant-time equivalent without the assumption would introduce a
-   * potential out-of-bounds access, since buf[i] would be accessed regardless
-   * of i's value in order to ensure constant-time-ness. The FaCT compiler
-   * checks for this and produces an error when a potential out-of-bounds
-   * access is introduced. Hence, commenting out the below line will produce a
-   * compilation error. */
+  /* Commenting out the line below produces a compilation error because without
+   * it, the transformation making the conditional branch constant-time would
+   * inadvertantly introduce a potential buffer overflow. */
   assume(i < len buf);
 
   if (i < secret_index) {

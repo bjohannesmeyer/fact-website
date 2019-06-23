@@ -1,7 +1,10 @@
 // Type your code here, or load another example.
-/* This example demonstrates how the FaCT compiler transforms a conditional
- * branch on a secret value. The resulting executable contains no branches on
- * the secret cond, thereby closing a potential timing side-channel. */
+
+/* The FaCT compiler transforms conditional branches on secret values into
+ * branch-less, semantically equivalent executable code. In this example, the
+ * resulting assembly contains no branches on the secret cond, thereby closing a
+ * potential timing side-channel. */
+
 export secret uint32 select (
     secret bool cond, 
     public uint32 x, 
