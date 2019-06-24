@@ -1,0 +1,18 @@
+// Type your code here, or load another example.
+
+/* The FaCT compiler transforms early returns that may leak secret information
+ * by deferring them until the end of the procedure. For example, the `return
+ * y;` early return below could potentially leak the value of `cond` to an
+ * attacker, but deferring the return statement until the end of the procedure
+ * mitigates this potential timing side-channel. */
+
+export secret uint32 select_v2 (
+    secret bool cond, 
+    public uint32 x, 
+    public uint32 y) {
+  if(cond) {
+      return y;
+  }
+  return x;
+}
+

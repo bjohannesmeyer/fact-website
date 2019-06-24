@@ -6,8 +6,9 @@
  * is there to prevent. One workaround is to relax the defense model, and simply
  * leak the value of `y < 32`, either by adding `assume(y < 32)` or changing the
  * conditional to `if (declassify(y < 32))`. Another approach that secures the
- * values of `y < 32` at the cost of performance is to instead change the
- * conditional to `for (i from 0 to 31) { if i == y { return x << i; } }`. */
+ * value of `y < 32` at the cost of performance is to instead change the
+ * conditional to `for (uint8 i from 0 to 31) { if(i == y) { return x << i; }}`.
+ */
 
 secret uint32 potential_ub(secret uint32 x, secret uint32 y) {
   if (y < 32) {

@@ -5,7 +5,7 @@
  * resulting assembly contains no branches on the secret cond, thereby closing a
  * potential timing side-channel. */
 
-export secret uint32 select (
+export secret uint32 select_v1 (
     secret bool cond, 
     public uint32 x, 
     public uint32 y) {
