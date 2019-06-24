@@ -4,7 +4,7 @@
  * checks that `i < secret_index` --- because otherwise the transformation
  * making the conditional branch constant-time would inadvertantly reintroduce
  * the buffer overflow that the branch is already implicitly protecting against.
- * */
+ */
 
 void potential_oob(
     secret mut uint32[] buf,
